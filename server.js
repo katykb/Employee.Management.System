@@ -1,7 +1,7 @@
 const express = require("express");
 const mysql = require("mysql2");
 const inquirer = require("inquirer");
-const consoleTable = require ('console.table');
+const consoleTable = require("console.table");
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -18,6 +18,30 @@ const db = mysql.createConnection(
   },
   console.log(`Connected to the employees_db database.`)
 );
+
+inquirer.prompt([
+  {
+    type: "list",
+    message: "What would you like to do?",
+    choices: [
+      "View all departments?",
+      "View all roles?",
+      "View all employees?",
+      "Add a department?",
+      "Add a role?",
+      "Add an employee?",
+      "Update an employee role?",
+    ],
+    name: "mainMenu",
+    validate: (value) => {
+      if (value) {
+        return true;
+      } else {
+        return "Please enter a selection to continue.";
+      }
+    },
+  },
+]);
 
 app.use((req, res) => {
   res.status(404).end();
