@@ -2,18 +2,9 @@ const express = require("express");
 const mysql = require("mysql2");
 const inquirer = require("inquirer");
 const consoleTable = require("console.table");
+const getDepts = require("./lib/department");
 
-const PORT = process.env.PORT || 8080;
-const app = express();
 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-
-pp.post("/api/new-employee", ({ body }, res) => {
-  const sql = `INSERT INTO employee (first_name)
-      VALUES (?)`;
-  const params = [body.first_name];
-});
 
 inquirer
   .prompt([
@@ -41,12 +32,13 @@ inquirer
     },
   ])
   .then(function (answer) {
-    switch (answer.action) {
-      case "View All Departments":
-        viewDepts();
+    switch (answer.mainMenu) {
+      case "View all departments?":
+        console.log('hello world');
+        getDepts();
         break;
 
-      case "View All Roles":
+      case "View all roles?":
         viewRoles();
         break;
 
@@ -75,10 +67,6 @@ inquirer
         break;
     }
   });
-app.use((req, res) => {
-  res.status(404).end();
-});
 
-app.listen(PORT, () => {
-  console.log(`Server is running 🏃 on ${PORT}`);
-});
+
+
