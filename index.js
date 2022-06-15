@@ -33,11 +33,12 @@ function runEMS() {
         },
       },
     ])
-    .then(function (answer) {
+    .then( async function (answer) {
       switch (answer.mainMenu) {
         case "View all departments?":
           console.log("hello world");
-          viewDepts();
+         viewDepts();
+          runEMS();
           break;
 
         case "View all positions?":
@@ -46,7 +47,7 @@ function runEMS() {
           break;
 
         case "View All Employees":
-          console.log(employees);
+          console.log('employees');
           viewEmployees();
           break;
 
@@ -54,8 +55,8 @@ function runEMS() {
           addEmployee();
           break;
 
-        case "Add Position":
-          addPosition();
+        case "Add jobRole":
+          addJobRole();
           break;
 
         case "Add Deapartment":
@@ -219,3 +220,4 @@ function runEMS() {
       }
   }
 }
+runEMS ();

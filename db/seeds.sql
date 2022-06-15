@@ -7,7 +7,7 @@ VALUES  ("Sales"),
         ("Legal");
 
 
-INSERT INTO position (title, salary, id)
+INSERT INTO job_role (title, salary, id)
 VALUES
         ("Salesperson", 120000),
         ("Sales Lead", 130000),
@@ -18,8 +18,8 @@ VALUES
         ("Legal Team Lead", 45000),
         ("Lawyer", 150000);
 
-INSERT INTO employee (first_name, last_name, position_id, manager_id)
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES
-    ("Ethan", "Brown"),
-    ("Henry", "Brown");
+    ("Ethan", "Brown", 1),
+    ("Henry", "Brown", 2,1);
 
