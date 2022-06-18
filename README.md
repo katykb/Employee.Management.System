@@ -13,7 +13,8 @@
       The user is also able to create new departments and job roles as well as update employee information.
       Languages used: JavaScript
       Technology used: SQL, node, express.js, Sequelize, console.table, inquirer
-      ![image](https://user-images.githubusercontent.com/97707793/174460310-9ba073e1-b38d-455c-a48e-bdecb6737600.png)
+     
+     ![image](https://user-images.githubusercontent.com/97707793/174460310-9ba073e1-b38d-455c-a48e-bdecb6737600.png)
 
 ### Usage
       To quickly view departments, job roles and employees. To update employees and enter new department, 
