@@ -1,6 +1,6 @@
 const express = require("express");
 const mysql = require("mysql2");
-const promise = require("mysql2-promise")
+const promise = require("mysql2-promise");
 const inquirer = require("inquirer");
 const consoleTable = require("console.table");
 const viewDepts = require("./lib/department");
@@ -185,54 +185,50 @@ function addDepartment() {
     });
 }
 function updateEmployeeRole() {
-  db.query("SELECT * from department", (err, rows) => {
-    const depts = rows.map((row) => {
-      return {
-        name: row.name,
-        value: row.id,
-      };
+  db.query("SELECT * from employee", (err, rows) => {
+    db.query("SELECT * from job_role", (err, jobRows) => { 
+      const name = rows.map((row) => {
+        return {
+          name: `${row.first_name} ${row.last_name}`,
+          value: row.id,
+        };
+      });
+      const jobRoles = jobRows.map((row) => {
+        return {
+          name: row.title,
+          value: row.id,
+        };
+      });
+      inquirer
+        .prompt([
+          {
+            name: "currentEmployeeID",
+            type: "list",
+            message: "Select the name of the employee?",
+            choices: name,
+          },
+          {
+            name: "newRoleID",
+            type: "list",
+            message: "What is the title of the employee's new position?",
+            choices: jobRoles,
+          },
+        ])
+        .then(function (answer) {
+          const query = "UPDATE employee SET role_id = ? WHERE id =?";
+          db.query(
+            query,
+            [answer.newRoleID, parseInt(answer.currentEmployeeID)],
+            function (err, res) {
+              if (err) throw err;
+              console.log(
+                `You have successfully updated ${answer.currentEmployeeID} to the position of ${answer.newRoleID}!`
+              );
+              runEMS();
+            }
+          );
+        });
     });
-    inquirer.prompt([
-      {
-        name: "currentEmployeeID",
-        type: "input",
-        message: "What is the ID of the employee you would like to update?",
-      },
-      {
-        name: "newPositionTitle",
-        type: "input",
-        message: "What is the title of the employee's new position?",
-      },
-      {
-        name: "newPositionSalary",
-        type: "input",
-        message: "What is the new salary?",
-      },
-      {
-        name: "newPositionDepartmentID",
-        type: "input",
-        message: "choose department",
-        choices: depts,
-      },
-    ]);
-  }).then(function (answer) {
-    const query =
-      "UPDATE position SET title = ?, department_id =?, WHERE id =?";
-    db.query(
-      query,
-      [
-        answer.newPositionTitle,
-        answer.newPositionSalary,
-        answer.NewPositionDepartmentID,
-        parseInt(answer.currentEmployeeID),
-      ],
-      function (err, res) {
-        if (err) throw err;
-        console.log(
-          `You have successfully updated ${currentEmployeeID} to the position of ${newPositionTitle}!`
-        );
-      }
-    );
   });
 
   const exit = () => {
