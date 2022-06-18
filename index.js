@@ -7,6 +7,7 @@ const viewDepts = require("./lib/department");
 const viewJobRoles = require("./lib/jobRoles");
 const viewEmployees = require("./lib/employee");
 const db = require("./dbConnect");
+const { exit } = require("process");
 
 function runEMS() {
   inquirer
@@ -70,7 +71,6 @@ function runEMS() {
 
         case "Exit":
           exit();
-          break;
       }
     });
 }
@@ -186,7 +186,7 @@ function addDepartment() {
 }
 function updateEmployeeRole() {
   db.query("SELECT * from employee", (err, rows) => {
-    db.query("SELECT * from job_role", (err, jobRows) => { 
+    db.query("SELECT * from job_role", (err, jobRows) => {
       const name = rows.map((row) => {
         return {
           name: `${row.first_name} ${row.last_name}`,
